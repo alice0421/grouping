@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    public function index(Maker $maker)
+    {
+        return view('groups/index')->with(['makers' => $maker->getByPagination()]);
+    }
+
+    public function show(Maker $maker)
+    {
+        return view('groups/show')->with(['maker' => $maker]);
+    }
+
     public function create()
     {
         return view('groups/create');
@@ -15,6 +25,7 @@ class GroupController extends Controller
 
     public function store(Request $request, Group $group)
     {
+        $title = $request['title'];
         $members = array_filter($request['members']); // メンバー（連想配列）
         $group_number = (int) $request['group_number']; // グループ数（整数）
         $group_name = $group->formatGroupName($request['group_name']); // グループ名（配列）
@@ -23,13 +34,8 @@ class GroupController extends Controller
         $groups = $group->makeGroups($members, $group_number, $group_name);
 
         // グループを全テーブルに保存
-        $maker = $group->storeGroups($members, $groups);
+        $maker = $group->storeGroups($title, $members, $groups);
 
         return redirect('/groups/'.$maker->id);
-    }
-
-    public function show(Maker $maker)
-    {
-        return view('groups/show')->with(['maker' => $maker]);
     }
 }

@@ -65,10 +65,11 @@ class Group extends Model
         return $groups;
     }
 
-    public function storeGroups($members, $groups)
+    public function storeGroups(string $title, array $members, array $groups)
     {
         // makersテーブルへの保存
         $maker = Maker::create([
+            'title' => $title,
             'number_of_people' => count($members),
             'user_id' => Auth::id()
         ]);

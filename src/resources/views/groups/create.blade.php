@@ -14,8 +14,11 @@
                         <button type="submit" class="text-white bg-blue-400 hover:bg-blue-600 font-bold rounded-lg text-sm px-5 py-2.5 mr-2 mb-4">
                             グループ分け開始
                         </button>
+
+                        <p>■ 用途</p>
+                        <input type="text" name="title" class="w-3/4"/>
                         
-                        <p>■ グループ数</p>
+                        <p class="mt-4">■ グループ数</p>
                         <input readonly type="number" name="group_number" min="1" :value="group_number" class="mr-4" />
                         <button type="button" @click="group_number > 0 ? group_number-- : group_number = 0" onclick="removeGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-red-400 hover:bg-red-600 font-bold rounded-full text-xl p-2.5 mr-2">
                             -
