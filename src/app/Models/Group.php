@@ -37,7 +37,7 @@ class Group extends Model
         return $group_name;
     }
 
-    // ランダムなグループを作成
+    // ランダム性のあるグループ作成
     public function makeGroups(array $members, int $group_number, array $group_name)
     {
         // メンバーの並びをシャッフルする（ランダム性を持たせる）
@@ -65,6 +65,7 @@ class Group extends Model
         return $groups;
     }
 
+    // グループを全テーブルに保存
     public function storeGroups(string $title, array $members, array $groups)
     {
         // makersテーブルへの保存
