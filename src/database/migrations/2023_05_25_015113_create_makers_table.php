@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('makers', function (Blueprint $table) {
             $table->id();
+            $table->text('title');
             $table->integer('number_of_people');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();

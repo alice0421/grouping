@@ -8,20 +8,22 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900" x-data="{ group_number: 2 }">
-                    <table class="mx-auto table-auto w-2/3 text-center">
+                <div class="p-6 text-gray-900">
+                    <table class="mx-auto table-auto w-3/4 text-center">
                         <thead>
                             <tr class="bg-gray-300">
                                 <th>用途</th>
                                 <th>グループ数</th>
                                 <th>人数</th>
+                                <th>作成日時</th>
                             </tr>
                             <tbody>
                             @foreach ($makers as $maker)
                                 <tr class="border-t border-gray-300">
-                                    <td>@{{ $maker->title }}</td>
+                                    <td>{{ $maker->title }}</td>
                                     <td>{{ count($maker->groups) }}</td>
                                     <td>{{ $maker->number_of_people }}</td>
+                                    <td>{{ $maker->updated_at }}</td>
                                 </tr>
                             @endforeach
                             </tbody>

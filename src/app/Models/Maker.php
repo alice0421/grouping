@@ -11,6 +11,7 @@ class Maker extends Model
     use HasFactory;
 
     protected $fillable = [
+        'title',
         'number_of_people',
         'user_id'
     ];
