@@ -17,8 +17,12 @@
                         
                         <p>■ グループ数</p>
                         <input readonly type="number" name="group_number" min="1" :value="group_number" class="mr-4" />
-                        <button type="button" @click="group_number > 0 ? group_number-- : group_number = 0" onclick="removeGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-red-400 hover:bg-red-600 font-bold rounded-full text-xl p-2.5 mr-2">-</button>
-                        <button type="button" @click="group_number++" onclick="addGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-blue-400 hover:bg-blue-600 font-bold rounded-full text-xl p-2.5">+</button>
+                        <button type="button" @click="group_number > 0 ? group_number-- : group_number = 0" onclick="removeGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-red-400 hover:bg-red-600 font-bold rounded-full text-xl p-2.5 mr-2">
+                            -
+                        </button>
+                        <button type="button" @click="group_number++" onclick="addGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-blue-400 hover:bg-blue-600 font-bold rounded-full text-xl p-2.5">
+                            +
+                        </button>
                         
 
                         <p class="mt-4">■ グループ名（任意）</p>
@@ -33,7 +37,8 @@
                             新規フォーム追加
                         </button>
                         <div id="member_form" class="mt-2 grid grid-cols-4 gap-4">
-                            @for ($i = 0; $i < 4; $i++)
+                            <input required type="text" name="members[]" class="w-full" />
+                            @for ($i = 0; $i < 3; $i++)
                             <input type="text" name="members[]" class="w-full" />
                             @endfor
                         </div>
