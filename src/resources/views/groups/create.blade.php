@@ -16,11 +16,11 @@
                         </button>
 
                         <p>■ 用途</p>
-                        <input type="text" name="title" class="w-3/4"/>
+                        <input required type="text" name="title" class="w-3/4"/>
                         
                         <p class="mt-4">■ グループ数</p>
                         <input readonly type="number" name="group_number" min="1" :value="group_number" class="mr-4" />
-                        <button type="button" @click="group_number > 0 ? group_number-- : group_number = 0" onclick="removeGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-red-400 hover:bg-red-600 font-bold rounded-full text-xl p-2.5 mr-2">
+                        <button type="button" @click="group_number > 1 ? group_number-- : group_number = 1" onclick="removeGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-red-400 hover:bg-red-600 font-bold rounded-full text-xl p-2.5 mr-2">
                             -
                         </button>
                         <button type="button" @click="group_number++" onclick="addGroupForm()" class="w-12 h-12 text-white text-center align-middle bg-blue-400 hover:bg-blue-600 font-bold rounded-full text-xl p-2.5">
@@ -30,9 +30,8 @@
 
                         <p class="mt-4">■ グループ名（任意）</p>
                         <div id="group_form" class="grid grid-cols-4 gap-4">
-                            @for ($i = 0; $i < 2; $i++)
+                            <input type="text" id="first_group_input" name="group_name[]" class="w-full" />
                             <input type="text" name="group_name[]" class="w-full" />
-                            @endfor
                         </div>
                         
                         <p class="mt-4">■ メンバー</p>
@@ -65,6 +64,8 @@
         function removeGroupForm()
         {
             const removeForm = document.getElementById("group_form").lastElementChild;
+            // グループ名入力欄は最低1つ残す。
+            if (removeForm.id === "first_group_input") return;
 
             removeForm.remove();
         };
