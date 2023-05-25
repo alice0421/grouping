@@ -69,7 +69,7 @@ class Group extends Model
     {
         // makersテーブルへの保存
         $maker = Maker::create([
-            'number_of_people' => count($groups),
+            'number_of_people' => count($members),
             'user_id' => Auth::id()
         ]);
 
