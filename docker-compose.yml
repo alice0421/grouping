@@ -1,0 +1,41 @@
+version: '3.8' # composeファイル（≠docker compose）のバージョンを記載
+
+services:
+  # phpの設定
+  app:
+    container_name: app_grouping
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      - ./src/:/var/www/html
+
+  # nginxの設定
+  web: # サービス名を指定
+    container_name: nginx_grouping # コンテナ名を指定
+    build: # ビルドするDockerfileの設定
+      context: . # docker buildコマンドを実行する場所を指定（基本ルートディレクトリを指定しておけば良い）
+      dockerfile: ./docker/nginx/Dockerfile # Dockerfileがあるパスを指定
+    ports: # ローカルとDockerコンテナ間のポート番号の対応付けを設定
+      - ${WEB_PORT}:80 # {ローカルのポート番号}:{Dockerコンテナのポート番号}（ローカルは未使用のポートを指定すること、DockerはかぶっていてもOK）
+    depends_on: # コンテナ間の依存関係を設定
+      - app # 先に起動するコンテナのサービス名を指定（コンテナ名ではない）
+    volumes: # ローカルとDockerコンテナ間のディレクトリやファイルなどのリソースを対応付け
+      - ./src/:/var/www/html # {ローカルのリソースのパス}:{Dockerコンテナのリソースのパス}
+  
+  # mysqlの設定
+  db:
+    container_name: mysql_grouping
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - ./db:/var/lib/mysql # {ローカルのvolumeの名前}:{DockerコンテナのDBのパス}
