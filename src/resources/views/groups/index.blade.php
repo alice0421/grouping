@@ -20,7 +20,7 @@
                             <tbody>
                             @foreach ($makers as $maker)
                                 <tr class="border-t border-gray-300">
-                                    <td>{{ $maker->title }}</td>
+                                    <td><a href="/groups/{{ $maker->id }}" class="text-blue-700 underline hover:no-underline">{{ $maker->title }}</a></td>
                                     <td>{{ count($maker->groups) }}</td>
                                     <td>{{ $maker->number_of_people }}</td>
                                     <td>{{ $maker->updated_at }}</td>
