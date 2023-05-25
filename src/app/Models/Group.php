@@ -19,6 +19,19 @@ class Group extends Model
         return $this->belongsToMany(Member::class);
     }
 
+    // グループ名が入力されていなかった時 or 足りなかった時、自動的に数字（配列番号）をグループ名とする
+    public function formatGroupName(array $group_name)
+    {
+        for ($i = 0; $i < count($group_name); $i++) {
+            if (is_null($group_name[$i])) {
+                $group_name[$i] = (string) ($i + 1);
+            }
+        }
+
+        return $group_name;
+    }
+
+    // ランダムなグループを作成
     public function makeGroups(array $members, int $group_number, array $group_name)
     {
         // メンバーの並びをシャッフルする（ランダム性を持たせる）
@@ -26,7 +39,6 @@ class Group extends Model
 
         $each_group_number = floor(count($members) / $group_number); // メンバー数 ÷ グループ数 の商を整数で切り捨て
         $rest_member_number = count($members) % $group_number; // メンバー数 ÷ グループ数 の余り
-
 
         $groups = array(); // ここに完成したグループ分けを入れていく
         $offset = 0;
