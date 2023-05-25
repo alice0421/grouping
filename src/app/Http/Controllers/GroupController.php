@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
+use App\Models\Maker;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -24,7 +25,11 @@ class GroupController extends Controller
         // グループを全テーブルに保存
         $maker = $group->storeGroups($members, $groups);
 
-        dd($maker);
-        // return redirect('/groups/'.$maker->id);
+        return redirect('/groups/'.$maker->id);
+    }
+
+    public function show(Maker $maker)
+    {
+        return view('groups/show')->with(['maker' => $maker]);
     }
 }
