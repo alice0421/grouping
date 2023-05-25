@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Group extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'maker_id'
+    ];
 
     public function maker()
     {
@@ -57,5 +63,37 @@ class Group extends Model
         }
 
         return $groups;
+    }
+
+    public function storeGroups($members, $groups)
+    {
+        // makersテーブルへの保存
+        $maker = Maker::create([
+            'number_of_people' => count($groups),
+            'user_id' => Auth::id()
+        ]);
+
+        // membersテーブルへの保存
+        foreach ($members as $member) {
+            // 同じ名前の人は重複させない
+            if(Member::where('name', $member)->exists()) continue;
+            Member::create([
+                'name' => $member
+            ]);
+        }
+
+        // groupsテーブルへの保存（と同時にgroup_member中間テーブルへの保存）
+        foreach ($groups as $group_name => $members) {
+            $group = Group::create([
+                'name' => $group_name,
+                'maker_id' => $maker->id,
+            ]);
+            foreach ($members as $member) {
+                // dd(Member::where('name', $member)->first()->id);
+                $group->members()->attach(Member::where('name', $member)->first()->id);
+            }
+        }
+
+        return $maker;
     }
 }

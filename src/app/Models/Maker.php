@@ -9,6 +9,11 @@ class Maker extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'number_of_people',
+        'user_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);

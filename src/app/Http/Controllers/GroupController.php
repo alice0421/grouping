@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Group;
-use App\Models\Maker;
-use App\Models\Member;
-use App\Models\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -24,6 +21,10 @@ class GroupController extends Controller
         // ランダム性のあるグループ作成
         $groups = $group->makeGroups($members, $group_number, $group_name);
 
-        dd($groups);
+        // グループを全テーブルに保存
+        $maker = $group->storeGroups($members, $groups);
+
+        dd($maker);
+        // return redirect('/groups/'.$maker->id);
     }
 }
