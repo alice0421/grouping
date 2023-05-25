@@ -9,6 +9,10 @@ class Member extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name'
+    ];
+
     public function groups()
     {
         return $this->belongsToMany(Group::class);

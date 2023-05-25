@@ -4,10 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Group extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+        'maker_id'
+    ];
 
     public function maker()
     {
@@ -19,6 +25,19 @@ class Group extends Model
         return $this->belongsToMany(Member::class);
     }
 
+    // グループ名が入力されていなかった時 or 足りなかった時、自動的に数字（配列番号）をグループ名とする
+    public function formatGroupName(array $group_name)
+    {
+        for ($i = 0; $i < count($group_name); $i++) {
+            if (is_null($group_name[$i])) {
+                $group_name[$i] = (string) ($i + 1);
+            }
+        }
+
+        return $group_name;
+    }
+
+    // ランダムなグループを作成
     public function makeGroups(array $members, int $group_number, array $group_name)
     {
         // メンバーの並びをシャッフルする（ランダム性を持たせる）
@@ -26,7 +45,6 @@ class Group extends Model
 
         $each_group_number = floor(count($members) / $group_number); // メンバー数 ÷ グループ数 の商を整数で切り捨て
         $rest_member_number = count($members) % $group_number; // メンバー数 ÷ グループ数 の余り
-
 
         $groups = array(); // ここに完成したグループ分けを入れていく
         $offset = 0;
@@ -45,5 +63,37 @@ class Group extends Model
         }
 
         return $groups;
+    }
+
+    public function storeGroups($members, $groups)
+    {
+        // makersテーブルへの保存
+        $maker = Maker::create([
+            'number_of_people' => count($groups),
+            'user_id' => Auth::id()
+        ]);
+
+        // membersテーブルへの保存
+        foreach ($members as $member) {
+            // 同じ名前の人は重複させない
+            if(Member::where('name', $member)->exists()) continue;
+            Member::create([
+                'name' => $member
+            ]);
+        }
+
+        // groupsテーブルへの保存（と同時にgroup_member中間テーブルへの保存）
+        foreach ($groups as $group_name => $members) {
+            $group = Group::create([
+                'name' => $group_name,
+                'maker_id' => $maker->id,
+            ]);
+            foreach ($members as $member) {
+                // dd(Member::where('name', $member)->first()->id);
+                $group->members()->attach(Member::where('name', $member)->first()->id);
+            }
+        }
+
+        return $maker;
     }
 }

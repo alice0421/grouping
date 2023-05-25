@@ -26,6 +26,7 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     // Grouping用のルーティング
     Route::get('/groups/create', [GroupController::class, 'create']);
+    Route::get('/groups/{group}', [GroupController::class, 'show']);
     Route::post('/groups', [GroupController::class, 'store']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
