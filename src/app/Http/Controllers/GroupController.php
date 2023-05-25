@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Models\Group;
-use App\Http\Models\Maker;
-use App\Http\Models\Member;
-use App\Http\Models\User;
+use App\Models\Group;
+use App\Models\Maker;
+use App\Models\Member;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class GroupController extends Controller
@@ -15,10 +15,14 @@ class GroupController extends Controller
         return view('groups/create');
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Group $group)
     {
-        $group_number = (int) $request['group_number'];
-        $members = $request['members'];
-        dd($group_number, $members);
+        $group_number = (int) $request['group_number']; // グループ数（整数）
+        $members = $request['members']; // メンバー（連想配列）
+
+        // ランダム性のあるグループ作成
+        $groups = $group->makeGroups($group_number, $members);
+
+        dd($groups);
     }
 }
