@@ -25,6 +25,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     // Grouping用のルーティング
+    Route::get('/groups', [GroupController::class, 'index']);
     Route::get('/groups/create', [GroupController::class, 'create']);
     Route::get('/groups/{maker}', [GroupController::class, 'show']);
     Route::post('/groups', [GroupController::class, 'store']);

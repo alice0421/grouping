@@ -17,7 +17,8 @@
                                 <th>グループ名</th>
                                 <th>メンバー</th>
                             </tr>
-                            <tbody>
+                        </thead>
+                        <tbody>
                             @foreach ($maker->groups as $group)
                             <tr class="border-t border-gray-300">
                                 <td>{{ $group->name }}</td>
@@ -29,7 +30,6 @@
                             </tr>
                             @endforeach
                             </tbody>
-                        </thead>
                     </table>
                 </div>
         </div>

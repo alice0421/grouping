@@ -8,6 +8,16 @@ use Illuminate\Http\Request;
 
 class GroupController extends Controller
 {
+    public function index(Maker $maker)
+    {
+        return view('groups/index')->with(['makers' => $maker->getByPagination()]);
+    }
+
+    public function show(Maker $maker)
+    {
+        return view('groups/show')->with(['maker' => $maker]);
+    }
+
     public function create()
     {
         return view('groups/create');
@@ -26,10 +36,5 @@ class GroupController extends Controller
         $maker = $group->storeGroups($members, $groups);
 
         return redirect('/groups/'.$maker->id);
-    }
-
-    public function show(Maker $maker)
-    {
-        return view('groups/show')->with(['maker' => $maker]);
     }
 }
