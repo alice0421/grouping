@@ -19,7 +19,7 @@ class Group extends Model
         return $this->belongsToMany(Member::class);
     }
 
-    public function makeGroups(int $group_number, array $members)
+    public function makeGroups(int $group_number, array $group_name, array $members)
     {
         // メンバーの並びをシャッフルする（ランダム性を持たせる）
         shuffle($members);
