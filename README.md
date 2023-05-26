@@ -18,11 +18,12 @@
 ※ [GitHubのコミット履歴](https://github.com/alice0421/grouping/commits/master)を見たらなんとなくわかるかと。
 <br>
 ※ やったことの順番を以下に書いています。どのように弄ったかは、上記コミット履歴か実際のファイルを見てみてください。
+
 1. マイグレーションファイルとシーディングファイルの作成。
    - マイグレーションファイルは以下の順番で作成（リレーションの関係上）。
        1. src/database/migrations/2014_10_12_000000_create_users_table.php
-       2. src/database/migrations/2023_05_25_015032_create_members_table.php
-       3. src/database/migrations/2023_05_25_015113_create_makers_table.php
+       2. src/database/migrations/2023_05_25_015113_create_makers_table.php
+       3. src/database/migrations/2023_05_25_015123_create_members_table.php
        4. src/database/migrations/2023_05_25_015134_create_groups_table.php
    - ./src/database/seeders/UserSeeder.phpの作成（`migrate:fresh`するたびにユーザー登録するのが面倒だったため作成）。 
 2. 各テーブルのモデルを作成し、リレーション関係を追記。
@@ -57,6 +58,8 @@
    - src/app/Http/Controllers/GroupController.phpの`index`メソッドを追記。
      - ペジネーションのために、src/app/Models/Maker.phpに`getByPagination`メソッドを追記。
    - src/resources/views/groups/index.blade.phpの作成。
-1. ログイン直後のホーム画面をグループ一覧画面に遷移するように変更。
+8. ログイン直後のホーム画面をグループ一覧画面に遷移するように変更。
    - src/app/Providers/RouteServiceProvider.phpの`HOME`を`/groups`に変更。
+9. グループ一覧とグループ詳細画面に削除機能を実装。
+   - リレーション関係のすべてのデータを削除させるため、membersテーブルにmaker_idを追加。
 
