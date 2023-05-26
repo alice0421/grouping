@@ -29,6 +29,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/create', [GroupController::class, 'create'])->name('group.create');
     Route::get('/groups/{maker}', [GroupController::class, 'show'])->name('group.show');
     Route::post('/groups', [GroupController::class, 'store'])->name('group.store');
+    Route::delete('/groups/{maker}', [GroupController::class, 'delete'])->name('group.delete');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
