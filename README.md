@@ -67,4 +67,6 @@
    - src/app/Providers/RouteServiceProvider.phpの`HOME`を`/groups`に変更。
 9. グループ一覧とグループ詳細画面に削除機能を実装。
    - リレーション関係のすべてのデータを削除させるため、membersテーブルにmaker_idを追加。
-
+   - src/routes/web.phpに`DELETE /groups/{maker}`を追記。
+   - src/app/Http/Controllers/GroupController.phpの`delete`メソッドを追記。
+   - src/resources/views/groups/index.blade.phpとsrc/resources/views/groups/show.blade.phpに削除ボタンを追加。
