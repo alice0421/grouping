@@ -15,7 +15,7 @@
   - グループ分け+グループ保存機能。保存が完了すると、作成したグループの詳細画面にリダイレクトする。
 
 ## 実装順
-※ [GitHubのコミット履歴](https://github.com/alice0421/grouping/commits/master)を見たらなんとなくわかるかと。
+※ [GitHubのコミット履歴](https://github.com/alice0421/grouping/commits/master/src)を見たらなんとなくわかるかと。
 <br>
 ※ やったことの順番を以下に書いています。どのように弄ったかは、上記コミット履歴か実際のファイルを見てみてください。
 
