@@ -10,8 +10,14 @@ class Member extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name'
+        'name',
+        'maker_id'
     ];
+
+    public function maker()
+    {
+        return $this->belongsTo(Maker::class);
+    }
 
     public function groups()
     {

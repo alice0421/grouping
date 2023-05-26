@@ -13,6 +13,13 @@
                     <div class="w-1/4 text-lg">
                         <p>メンバー数: {{ $maker->number_of_people }}人</p>
                         <p>グループ数: {{ count($maker->groups) }}グループ</p>
+                        <form action="/groups/{{ $maker->id }}" method="POST" id="delete_{{ $maker->id }}">
+                            @csrf
+                            @method("DELETE")
+                            <button type="button" onclick="deleteGroup({{ $maker->id }})" class="w-20 mt-6 py-2 px-3 text-sm font-semibold text-center text-white bg-red-400 rounded-lg hover:bg-red-500">
+                                削除
+                            </button>
+                        </form>
                     </div>
                     
                     <table class="w-3/4 table-fixed text-center">
@@ -38,4 +45,14 @@
                 </div>
         </div>
     </div>
+
+    <script>
+        function deleteGroup(id) {
+            "use strict"
+
+            if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                document.getElementById(`delete_${id}`).submit();
+            }
+        }
+    </script>
 </x-app-layout>

@@ -21,6 +21,11 @@ class Maker extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function members()   
+    {
+        return $this->hasMany(Member::class);  
+    }
+
     public function groups()   
     {
         return $this->hasMany(Group::class);  

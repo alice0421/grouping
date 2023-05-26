@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('groups', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('maker_id')->constrained('makers');
+            $table->foreignId('maker_id')->constrained('makers')->cascadeOnDelete();
             $table->timestamps();
         });
     }

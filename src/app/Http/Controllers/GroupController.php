@@ -41,6 +41,14 @@ class GroupController extends Controller
         // グループを全テーブルに保存（App\Models\Group.phpのstoreGroupsメソッド使用）
         $maker = $group->storeGroups($title, $members, $groups);
 
-        return redirect('/groups/'.$maker->id);
+        return redirect()->route('group.show', ['maker' => $maker->id]);
+        // return redirect('/groups/'.$maker->id); と同じこと
+    }
+
+    // グループ削除機能
+    public function delete(Maker $maker)
+    {
+        $maker->delete();
+        return redirect()->route('group.index');
     }
 }
