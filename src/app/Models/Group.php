@@ -80,7 +80,8 @@ class Group extends Model
             // 同じ名前の人は重複させない → グループを削除するときに同じ人で違うグループに所属していた場合、消えてしまうのでだめ！
             // if(Member::where('name', $member)->exists()) continue;
             Member::create([
-                'name' => $member
+                'name' => $member,
+                'maker_id' => $maker->id
             ]);
         }
 
