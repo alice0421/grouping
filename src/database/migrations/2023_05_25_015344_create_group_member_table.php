@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('group_member', function (Blueprint $table) {
-            $table->foreignId('member_id')->constrained('members');
-            $table->foreignId('group_id')->constrained('groups');
+            $table->foreignId('member_id')->constrained('members')->cascadeOnDelete();
+            $table->foreignId('group_id')->constrained('groups')->cascadeOnDelete();
             $table->primary(['member_id', 'group_id']); // 複合キーを追加
         });
     }
